@@ -1,7 +1,9 @@
 # HC IT Pros — ITAM Dashboard
 
 An interactive **IT Asset Management (ITAM) Dashboard** that loads data directly from a CSV file.  
-Built for HC IT Pros in the same color palette and design style as the main website.
+Built for **HC IT Pros** in the same color palette and design style as the main [HC IT Pros website](https://elspaniard97.github.io/hc-it-pros/).
+
+🌐 **Live Dashboard:** [https://elspaniard97.github.io/itam-dashboard/](https://elspaniard97.github.io/itam-dashboard/)
 
 ---
 
@@ -28,7 +30,7 @@ itam-dashboard/
 └── data/
 └── Stock Dashboard - Copy of Data.csv
 
-yaml
+markdown
 Copy code
 
 - The **CSV file** drives all data shown on the dashboard.  
@@ -39,39 +41,17 @@ Copy code
 
 ## 🚀 Hosting on GitHub Pages
 
-1. Create a new repository on GitHub, for example:
+1. The project is already live at:  
+   👉 **[https://elspaniard97.github.io/itam-dashboard/](https://elspaniard97.github.io/itam-dashboard/)**
 
-https://github.com/<YOUR_USERNAME>/itam-dashboard
+2. To update or redeploy:
+   ```bash
+   cd path/to/itam-dashboard
+   git add .
+   git commit -m "Update ITAM Dashboard"
+   git push
+GitHub Pages will automatically rebuild and deploy your site within a few minutes.
 
-csharp
-Copy code
-
-2. Upload or push all the files in this folder:
-
-```bash
-cd path/to/itam-dashboard
-git init
-git add .
-git commit -m "Initial commit - ITAM Dashboard"
-git branch -M main
-git remote add origin https://github.com/<YOUR_USERNAME>/itam-dashboard.git
-git push -u origin main
-Go to your repository’s
-Settings → Pages → Build and deployment
-
-Source: Deploy from a branch
-
-Branch: main
-
-Folder: / (root)
-
-Click Save
-
-GitHub will publish your dashboard at:
-
-arduino
-Copy code
-https://<YOUR_USERNAME>.github.io/itam-dashboard/
 📊 Updating Data
 To refresh your dashboard with new inventory or asset data:
 
@@ -87,10 +67,10 @@ Copy code
 git add data/Stock\ Dashboard\ -\ Copy\ of\ Data.csv
 git commit -m "Update ITAM data"
 git push
-The dashboard will automatically show the new data.
+The dashboard will automatically display the updated data.
 
 ⚙️ Local Testing
-You can preview the dashboard locally before pushing to GitHub:
+If you want to test changes before pushing to GitHub:
 
 bash
 Copy code
@@ -101,11 +81,11 @@ bash
 Copy code
 http://localhost:8000/itam-dashboard/
 🧠 Notes
-Ensure your CSV has a Category column for tab filtering to work.
+Ensure your CSV includes a Category column for tab filtering to work.
 
-If you add new categories, simply add a matching <a class="tab"> in index.html.
+To add new categories or tabs, simply edit the <nav> in index.html and add matching values.
 
-No backend required — everything runs client-side.
+Everything runs client-side — no backend or database required.
 
 🧾 License
 © 2025 HC IT Pros.
