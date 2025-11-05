@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HC IT Pros — ITAM Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="assets/logo.svg" alt="HC IT Pros logo" />
+        <div class="brand-name">HC IT Pros</div>
+      </div>
+
+      <nav class="nav" id="navTabs">
+        <!-- Tabs are static here, but content is filtered by JS -->
+        <a href="#" class="tab active" data-tab="Assets">Assets</a>
+        <a href="#" class="tab" data-tab="Inventory">Inventory</a>
+        <a href="#" class="tab" data-tab="Consumables">Consumables</a>
+        <a href="#" class="tab" data-tab="Models">Models</a>
+        <a href="#" class="tab" data-tab="Categories">Categories</a>
+        <a href="#" class="tab" data-tab="Employees">Employees</a>
+        <a href="#" class="tab" data-tab="Locations">Locations</a>
+        <a href="#" class="tab" data-tab="Reports">Reports</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn ghost">Reserve</button>
+        <button class="btn">Actions ▾</button>
+        <button class="btn primary">Add New</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="panel">
+      <div class="topbar">
+        <h2 id="sectionTitle">Assets</h2>
+        <div class="search">
+          <input id="searchInput" type="search" placeholder="Search table..." />
+        </div>
+      </div>
+
+      <!-- Summary cards -->
+      <div class="cards" id="summaryCards"></div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table id="dataTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">© <span id="year"></span> HC IT Pros — IT Asset Management</div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
