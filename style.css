@@ -135,6 +135,14 @@ html, body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .load-error { color: #c00; text-align: center; line-height: 1.7; }
+.upload-label {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+  cursor: pointer;
+}
+.upload-label input[type="file"] {
+  font-size: 13px; color: var(--muted);
+  margin-top: 4px;
+}
 
 /* ── Topbar ── */
 .topbar { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 12px 0; }

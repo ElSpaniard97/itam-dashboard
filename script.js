@@ -358,19 +358,27 @@ function wireListeners() {
     if (e.target === document.getElementById('modalOverlay')) closeModal();
   });
 
-  // CSV file upload fallback
-  document.getElementById('csvUpload').addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => initWithData(ev.target.result);
-    reader.readAsText(file);
-  });
+}
+
+// ─── CSV upload handler (used by both fallback UI paths) ──────────────────────
+function handleCSVUpload(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => initWithData(ev.target.result);
+  reader.readAsText(file);
 }
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   wireListeners(); // always wire buttons first — independent of CSV
+
+  // Use event delegation on document so it catches the dynamically injected
+  // #csvUpload input regardless of when it appears in the DOM.
+  document.addEventListener('change', e => {
+    if (e.target && e.target.id === 'csvUpload') {
+      handleCSVUpload(e.target.files[0]);
+    }
+  });
 
   fetch(CSV_PATH)
     .then(res => {
@@ -379,26 +387,17 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(text => initWithData(text))
     .catch(() => {
-      // Show upload fallback instead of just an error
       document.getElementById('loadingIndicator').innerHTML = `
         <div class="load-error">
           <p>⚠ No data file found at <code>${CSV_PATH}</code>.</p>
           <p>Upload your CSV to continue:</p>
-          <label class="btn primary upload-label">
-            📂 Choose CSV file
-            <input type="file" id="csvUpload" accept=".csv" style="display:none" />
+          <label class="upload-label">
+            <input type="file" id="csvUpload" accept=".csv" />
+            <span class="btn primary">📂 Choose CSV file</span>
           </label>
           <p style="margin-top:12px;font-size:12px;color:#6b7a8a">
             Or add your CSV to <code>/data/</code> and redeploy.
           </p>
         </div>`;
-      // Re-wire the upload input since the DOM just changed
-      document.getElementById('csvUpload').addEventListener('change', e => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = ev => initWithData(ev.target.result);
-        reader.readAsText(file);
-      });
     });
 });
