@@ -252,3 +252,30 @@ tbody tr:hover { background: #f7fbfd; }
   .cards { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Toast notification ── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #0B1C2C;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 9999;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast.toast-info  { border-left: 4px solid var(--accent-light); }
+.toast.toast-ok    { border-left: 4px solid #056e3a; background: #064; }
+.toast.toast-error { border-left: 4px solid #c00; background: #500; }

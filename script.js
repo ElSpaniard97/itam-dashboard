@@ -260,9 +260,42 @@ function closeMobileNav() {
   document.getElementById('mobileNavOverlay').classList.remove('open');
 }
 
+// ─── In-modal toast (replaces alert()) ───────────────────────────────────────
+function showToast(message, type = 'info') {
+  const existing = document.getElementById('dashToast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.id = 'dashToast';
+  toast.className = 'toast toast-' + type;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add('toast-show'), 10);
+  setTimeout(() => { toast.classList.remove('toast-show'); setTimeout(() => toast.remove(), 300); }, 3500);
+}
+
+function showErrorAndUpload() {
+  const el = document.getElementById('loadingIndicator');
+  el.style.display = 'flex';
+  el.innerHTML = `
+    <div class="load-error">
+      <p>No data file found. Upload your CSV to continue:</p>
+      <label class="upload-label">
+        <input type="file" id="csvUpload" accept=".csv" />
+        <span class="btn primary">📂 Choose CSV file</span>
+      </label>
+      <p style="margin-top:12px;font-size:12px;color:#6b7a8a">
+        Or add your CSV to <code>/data/</code> and redeploy.
+      </p>
+    </div>`;
+}
+
 // ─── Data initialisation (called after CSV loads or file is uploaded) ─────────
 function initWithData(csvText) {
-  _all = parseCSV(csvText);
+  // GitHub Pages returns a 200 HTML 404 page for missing files — detect it
+  if (!csvText || csvText.trimStart().startsWith('<')) { showErrorAndUpload(); return; }
+  const parsed = parseCSV(csvText);
+  if (parsed.headers.length === 0) { showErrorAndUpload(); return; }
+  _all = parsed;
   _categoryIndex = findColumn(_all.headers, 'category').index;
   document.getElementById('loadingIndicator').style.display = 'none';
   document.getElementById('mainPanel').style.display = '';
@@ -337,7 +370,7 @@ function wireListeners() {
       : '<p>Load data first to see fields.</p>';
     openModal('Add New ' + _currentTab,
       `<div class="form-grid">${fields}</div>`,
-      () => alert('UI demo — connect a backend to persist new records.'));
+      () => showToast('This is a UI demo — connect a backend to persist new records.', 'info'));
   });
 
   // Reserve modal
@@ -348,7 +381,7 @@ function wireListeners() {
         <div class="form-field"><label>Reserved For</label><input type="text" placeholder="Employee name" /></div>
         <div class="form-field"><label>Return Date</label><input type="date" /></div>
       </div>`,
-      () => alert('UI demo — connect a backend to persist reservations.'));
+      () => showToast('This is a UI demo — connect a backend to persist reservations.', 'info'));
   });
 
   // Modal close
@@ -386,18 +419,5 @@ document.addEventListener('DOMContentLoaded', () => {
       return res.text();
     })
     .then(text => initWithData(text))
-    .catch(() => {
-      document.getElementById('loadingIndicator').innerHTML = `
-        <div class="load-error">
-          <p>⚠ No data file found at <code>${CSV_PATH}</code>.</p>
-          <p>Upload your CSV to continue:</p>
-          <label class="upload-label">
-            <input type="file" id="csvUpload" accept=".csv" />
-            <span class="btn primary">📂 Choose CSV file</span>
-          </label>
-          <p style="margin-top:12px;font-size:12px;color:#6b7a8a">
-            Or add your CSV to <code>/data/</code> and redeploy.
-          </p>
-        </div>`;
-    });
+    .catch(() => showErrorAndUpload());
 });
