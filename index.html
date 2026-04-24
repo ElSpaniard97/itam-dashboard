@@ -14,8 +14,12 @@
         <div class="brand-name">HC IT Pros</div>
       </div>
 
+      <!-- Hamburger for mobile -->
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+
       <nav class="nav" id="navTabs">
-        <!-- Tabs are static here, but content is filtered by JS -->
         <a href="#" class="tab active" data-tab="Assets">Assets</a>
         <a href="#" class="tab" data-tab="Inventory">Inventory</a>
         <a href="#" class="tab" data-tab="Consumables">Consumables</a>
@@ -27,24 +31,64 @@
       </nav>
 
       <div class="nav-actions">
-        <button class="btn ghost">Reserve</button>
-        <button class="btn">Actions ▾</button>
-        <button class="btn primary">Add New</button>
+        <button class="btn ghost" id="btnReserve">Reserve</button>
+        <div class="actions-wrap">
+          <button class="btn" id="btnActions">Actions ▾</button>
+          <div class="actions-menu" id="actionsMenu">
+            <button class="action-item" id="btnExport">⬇ Export CSV</button>
+            <button class="action-item" id="btnToggleCols">⚙ Toggle Columns</button>
+          </div>
+        </div>
+        <button class="btn primary" id="btnAddNew">+ Add New</button>
       </div>
     </div>
   </header>
 
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+      <span>Navigation</span>
+      <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+    </div>
+    <nav class="mobile-tab-list" id="mobileTabList">
+      <a href="#" class="mobile-tab active" data-tab="Assets">Assets</a>
+      <a href="#" class="mobile-tab" data-tab="Inventory">Inventory</a>
+      <a href="#" class="mobile-tab" data-tab="Consumables">Consumables</a>
+      <a href="#" class="mobile-tab" data-tab="Models">Models</a>
+      <a href="#" class="mobile-tab" data-tab="Categories">Categories</a>
+      <a href="#" class="mobile-tab" data-tab="Employees">Employees</a>
+      <a href="#" class="mobile-tab" data-tab="Locations">Locations</a>
+      <a href="#" class="mobile-tab" data-tab="Reports">Reports</a>
+    </nav>
+  </div>
+
   <main class="main">
-    <section class="panel">
+    <!-- Loading indicator -->
+    <div class="loading" id="loadingIndicator">
+      <div class="spinner"></div>
+      <p>Loading data…</p>
+    </div>
+
+    <section class="panel" id="mainPanel" style="display:none">
       <div class="topbar">
         <h2 id="sectionTitle">Assets</h2>
         <div class="search">
-          <input id="searchInput" type="search" placeholder="Search table..." />
+          <input id="searchInput" type="search" placeholder="Search table…" />
         </div>
       </div>
 
       <!-- Summary cards -->
       <div class="cards" id="summaryCards"></div>
+
+      <!-- Column toggle panel -->
+      <div class="col-toggle-panel" id="colTogglePanel" style="display:none">
+        <div class="col-toggle-header">
+          <strong>Toggle Columns</strong>
+          <button id="colToggleClose">✕</button>
+        </div>
+        <div class="col-toggle-list" id="colToggleList"></div>
+      </div>
 
       <!-- Table -->
       <div class="table-wrap">
@@ -52,15 +96,34 @@
           <thead id="tableHead"></thead>
           <tbody id="tableBody"></tbody>
         </table>
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState" style="display:none">
+          <div class="empty-icon">📭</div>
+          <p>No records found for this tab.</p>
+          <span>Try selecting a different tab or adjusting your search.</span>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Asset</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn ghost" id="modalCancel">Cancel</button>
+        <button class="btn primary" id="modalConfirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">© <span id="year"></span> HC IT Pros — IT Asset Management</div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="script.js"></script>
 </body>
 </html>
