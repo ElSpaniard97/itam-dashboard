@@ -14,7 +14,6 @@
         <div class="brand-name">HC IT Pros</div>
       </div>
 
-      <!-- Hamburger for mobile -->
       <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
         <span></span><span></span><span></span>
       </button>
@@ -64,7 +63,7 @@
   </div>
 
   <main class="main">
-    <!-- Loading indicator -->
+    <!-- Loading / error / upload state -->
     <div class="loading" id="loadingIndicator">
       <div class="spinner"></div>
       <p>Loading data…</p>
@@ -78,7 +77,6 @@
         </div>
       </div>
 
-      <!-- Summary cards -->
       <div class="cards" id="summaryCards"></div>
 
       <!-- Column toggle panel -->
@@ -90,13 +88,11 @@
         <div class="col-toggle-list" id="colToggleList"></div>
       </div>
 
-      <!-- Table -->
       <div class="table-wrap">
         <table id="dataTable">
           <thead id="tableHead"></thead>
           <tbody id="tableBody"></tbody>
         </table>
-        <!-- Empty state -->
         <div class="empty-state" id="emptyState" style="display:none">
           <div class="empty-icon">📭</div>
           <p>No records found for this tab.</p>
@@ -108,9 +104,9 @@
 
   <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay" style="display:none">
-    <div class="modal" id="modal">
+    <div class="modal">
       <div class="modal-header">
-        <h3 id="modalTitle">Add New Asset</h3>
+        <h3 id="modalTitle"></h3>
         <button class="modal-close" id="modalClose">✕</button>
       </div>
       <div class="modal-body" id="modalBody"></div>
